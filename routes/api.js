@@ -1,15 +1,16 @@
 const express = require('express');
-const {checkUserNotAlreadyAuthenticated} = require("../middlewares/index.js");
+const {checkUserNotAlreadyAuthenticated, isUserAuthenticated} = require("../middlewares/index.js");
 const {logInUser, createUser, readAllUsers, deleteAllUsers} = require("../controllers/users.js");
-
+const {createRoom, readAllRooms, deleteAllRooms} = require("../controllers/rooms.js");
 
 const apiRouter = express.Router();
 
-/**
+/* ===== Session Routes ===== */
+
 apiRouter.get('/session', (req, res) => {
     res.json(req.session);
 });
-*/
+
 apiRouter.delete('/session', (req, res) => {
     if (req.session === undefined) {
         res.json("Il n'y a pas de session à détuire")
@@ -20,6 +21,7 @@ apiRouter.delete('/session', (req, res) => {
     }
 });
 
+/* ===== User Routes ===== */
 
 apiRouter.post('/login', checkUserNotAlreadyAuthenticated, async (req, res) => {
     try{
@@ -33,6 +35,15 @@ apiRouter.post('/login', checkUserNotAlreadyAuthenticated, async (req, res) => {
     catch(e){
         res.status(401).send(e.message);
     }
+});
+
+apiRouter.delete('/logout', isUserAuthenticated, async (req, res) => {
+    try {
+        await req.session.destroy();
+    } catch (e) {
+    }
+    res.clearCookie("connect.sid");
+    res.end("La session a été détruite");
 });
 
 apiRouter.post('/user', async (req, res) => {
@@ -54,6 +65,32 @@ apiRouter.get('/users', async (req, res) => {
 apiRouter.delete('/deleteAll', async (req, res) => {
     try{
         res.json(await deleteAllUsers());
+    } catch(e){
+        res.status(500);
+    }
+});
+
+/* ===== Rooms Routes ===== */
+
+apiRouter.post('/room', async (req, res) => {
+    try{
+        res.json(await createRoom(req.body));
+    } catch(e){
+        res.status(500);
+    }
+});
+
+apiRouter.get('/rooms', async (req, res) => {
+    try{
+        res.json(await readAllRooms());
+    } catch(e){
+        res.status(500);
+    }
+});
+
+apiRouter.delete('/deleteAllRooms', async (req, res) => {
+    try{
+        res.json(await deleteAllRooms());
     } catch(e){
         res.status(500);
     }
