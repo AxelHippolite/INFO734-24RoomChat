@@ -6,7 +6,65 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>24Room</title>
     </head>
-    <body>
-        <p>Response: 200</p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <body onload="onLoad()">
+        <h1 class="title">Join Conversation</h1>
+        <h2></h2>
+        <input type="text" id="messages" placeholder="Messages"/>
+        <button onclick="sendMessages()">SEND</button>
+        <ul id="feed"></ul>
     </body>
 </html>
+<script>
+    const socket = io("http://localhost:3000");
+    const user = {
+        username: null,
+        userId: null,
+    }
+
+    socket.on('userConnected', payload => addWelcomeMessage(payload, false));
+    socket.on('sendMessage', payload => addMessage(payload));
+
+    function getSession(){
+        axios.get("http://localhost:3000/api/session").then(function (response) {
+            const username = response.data.username;
+            return username;
+        });
+    }
+
+    function enterRoom(){
+        const username = getSession();
+        user.name = username;
+        addWelcomeMessage({}, true);
+        socket.emit('userConnected', {username});
+    }
+
+    function addMessage({user, message}){
+        const date = new Date();
+        document.getElementById("feed").innerHTML += `<li>${user.name} - ${date.getHours()}:${date.getMinutes()} : ${message}</li>`;
+    };
+
+    function addWelcomeMessage(user, you){
+        const message = you ?
+            'You have joined the conversation' :
+            `${user.name} has joined the conversation`;
+        document.getElementById("feed").innerHTML += `<li style="color: green">${message}</li>`;
+    }
+
+    function sendMessages(){
+        const field = document.getElementById("messages");
+        if(!field.value){
+            field.placeholder = "ERROR";
+        } else{
+            const message = field.value;
+            addMessage({user, message});
+            socket.emit('sendMessage', {user, message});
+            field.value = '';
+        }
+    }
+
+    function onLoad(){
+        enterRoom();
+    }
+</script>

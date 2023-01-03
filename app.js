@@ -7,6 +7,9 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const redis = require("redis");
 const connectRedis = require("connect-redis");
+const {Server} = require("socket.io");
+
+const users = {};
 
 
 const viewRouter = require("./routes/views.js");
@@ -22,12 +25,39 @@ app.use(cors({
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(cookieParser());
-app.use("/utils", express.static('utils'))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 const server = http.createServer(app);
 server.listen(3000);
+
+/* ===== SocketIO ===== */
+
+const io = new Server(server, {
+    cors: {
+        origin: (requestOrigin, callback) => {
+            callback(undefined, requestOrigin);
+        },
+        methods: ["GET", "POST"],
+    },
+});
+
+io.on('connection', socket => {
+    socket.on('userConnected', payload => {
+        users[socket.id] = {
+            id: socket.id,
+            name: payload.name
+        };
+        socket.broadcast.emit('userConnected', users[socket.id]);
+    });
+
+    socket.on('sendMessage', payload => {
+        socket.broadcast.emit('sendMessage', {
+            user: payload.user,
+            message: payload.message,
+        });
+    });
+});
 
 /* ===== MongoDB ===== */
 
