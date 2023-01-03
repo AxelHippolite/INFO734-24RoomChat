@@ -6,22 +6,61 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>24Room</title>
     </head>
-    <body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <body onload="onLoad()">
         <h1>24Room</h1>
-        <h2>Join Rooms</h2>
+        <h2 id="welcoming"></h2>
+        <button onclick="signOut()">Sign Out</button>
         <h3>Create Room</h3>
-        <form id="create-room">
-            <input type="text" id="room-name" placeholder="Roome Name"/>
-            <button id="create-room-btn">Create Room</button>
-        </form>
-        <h3>Join Room</h3>
-        <form id="join-form" action="room">
-            <input type="text" id="username" name="username" placeholder="Username"/>
-            <input type="text" id="code" name="r" placeholder="Room Code"/>
-            <button id="submit-btn">Join</button>
-        </form>
+        <input type="text" id="name" placeholder="Roome Name"/>
+        <button onclick="createRoom()">Create Room</button>
+        <button onclick="deleteAllRooms()">Delete All Rooms</button>
         <h3>Rooms Available</h3>
-        <ul id="room-feed"></ul>
-        <script src="/utils/rooms.js"></script>
+        <p>!!! Click To Join !!!</p>
+        <ul id="feed"></ul>
     </body>
 </html>
+<script>
+    function createRoom(){
+        const name = document.getElementById("name").value;
+        const code = roomId(5);
+        axios.post("http://localhost:3000/api/room", {name: name, code: code});
+    }
+    function readAllRooms(){
+        axios.get("http://localhost:3000/api/rooms").then(function(response){
+            const res = response.data;
+            for(let i = 0; i < response.data.length; i++){
+                document.getElementById("feed").innerHTML += `<li onclick="joinRoom('${res[i].code}')"> <b>Name</b> : ${res[i].name} <b>Code</b> : ${res[i].code}</li>`;
+            }
+        });
+    }
+    function deleteAllRooms(){
+        axios.delete("http://localhost:3000/api/deleteAllRooms");
+    }
+    function joinRoom(code){
+        window.location.href = "http://localhost:3000/room?id="+code;
+    }
+    function signOut(){
+        axios.delete("http://localhost:3000/api/logout");
+        //window.location.href = "http://localhost:3000/home";
+    }
+    function getSession(){
+        axios.get("http://localhost:3000/api/session").then(function (response) {
+            const username = response.data.username;
+            document.getElementById("welcoming").innerHTML += `Welcome ${username} !`;
+        });
+    }
+    function onLoad(){
+        getSession();
+        readAllRooms();
+    }
+    function roomId(length){
+        let result = '';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let charactersLength = characters.length;
+        for(let i = 0; i < length; i++){
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+</script>

@@ -3,6 +3,14 @@ async function printSession(req, res, next) {
     next();
 }
 
+const isUserAuthenticated = async (req, res, next) => {
+    if (req.session.userId !== undefined) {
+        next();
+    } else {
+        return res.status(401).send("Vous n'êtes pas authentifié");
+    }
+}
+
 const checkUserNotAlreadyAuthenticated = async (req, res, next) => {
     if (req.session.userId === undefined) {
         next();
@@ -13,5 +21,6 @@ const checkUserNotAlreadyAuthenticated = async (req, res, next) => {
 
 module.exports = {
     printSession: printSession,
-    checkUserNotAlreadyAuthenticated: checkUserNotAlreadyAuthenticated
+    checkUserNotAlreadyAuthenticated: checkUserNotAlreadyAuthenticated,
+    isUserAuthenticated: isUserAuthenticated
 }

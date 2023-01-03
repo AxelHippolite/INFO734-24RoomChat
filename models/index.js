@@ -23,6 +23,19 @@ const UserSchema = new Schema({
     }
 });
 
+const RoomSchema = new Schema({
+    name: {
+        type: Schema.Types.String,
+        required: true
+    },
+
+    code: {
+        type: Schema.Types.String,
+        required: true
+    }
+})
+
 module.exports = {
-    User: mongoose.model('user', UserSchema)
+    User: mongoose.model('user', UserSchema),
+    Room: mongoose.model('room', RoomSchema)
 }
