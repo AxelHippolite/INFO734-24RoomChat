@@ -1,7 +1,8 @@
 const express = require('express');
 const {checkUserNotAlreadyAuthenticated, isUserAuthenticated} = require("../middlewares/index.js");
 const {logInUser, createUser, readAllUsers, deleteAllUsers} = require("../controllers/users.js");
-const {createRoom, readAllRooms, deleteAllRooms} = require("../controllers/rooms.js");
+const {createRoom, readAllRooms, deleteAllRooms} = require("../controllers/rooms.js");``
+const {createMessage, readMessages} = require("../controllers/messages.js");
 
 const apiRouter = express.Router();
 
@@ -91,6 +92,24 @@ apiRouter.get('/rooms', async (req, res) => {
 apiRouter.delete('/deleteAllRooms', async (req, res) => {
     try{
         res.json(await deleteAllRooms());
+    } catch(e){
+        res.status(500);
+    }
+});
+
+/* ===== Messages Routes ===== */
+
+apiRouter.post('/message', async (req, res) => {
+    try{
+        res.json(await createMessage(req.body));
+    } catch(e){
+        res.status(500);
+    }
+});
+
+apiRouter.get('/messages/:roomid', async (req, res) => {
+    try{
+        res.json(await readMessages(req.params.roomid));
     } catch(e){
         res.status(500);
     }
