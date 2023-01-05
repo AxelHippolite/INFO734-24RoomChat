@@ -36,7 +36,20 @@ async function readRoomsViewed(userid) {
 
 async function deleteAllRooms() {
     try {
-        return await Room.deleteMany({})
+        const roomDeleted = await Room.deleteMany();
+        await Message.deleteMany();
+        return roomDeleted;
+    }
+    catch (e) {
+        throw new Error("An Error Has Occured");
+    }
+}
+
+async function deleteRoom(roomcode){
+    try {
+        const roomDeleted = await Room.remove({code: roomcode});
+        await Message.remove({roomCode: roomcode});
+        return roomDeleted;
     }
     catch (e) {
         throw new Error("An Error Has Occured");
@@ -47,5 +60,6 @@ module.exports = {
     createRoom: createRoom,
     readAllRooms: readAllRooms,
     readRoomsViewed: readRoomsViewed,
+    deleteRoom: deleteRoom,
     deleteAllRooms: deleteAllRooms
 }

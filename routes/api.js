@@ -1,7 +1,7 @@
 const express = require('express');
 const {checkUserNotAlreadyAuthenticated, isUserAuthenticated} = require("../middlewares/index.js");
 const {logInUser, createUser, readAllUsers, deleteAllUsers} = require("../controllers/users.js");
-const {createRoom, readAllRooms, readRoomsViewed, deleteAllRooms} = require("../controllers/rooms.js");``
+const {createRoom, readAllRooms, readRoomsViewed, deleteAllRooms, deleteRoom} = require("../controllers/rooms.js");``
 const {createMessage, readMessages, deleteAllMessages} = require("../controllers/messages.js");
 
 const apiRouter = express.Router();
@@ -92,6 +92,14 @@ apiRouter.get('/rooms', async (req, res) => {
 apiRouter.get('/roomsViewed/:userId', async (req, res) => {
     try{
         res.json(await readRoomsViewed(req.params.userId));
+    } catch(e){
+        res.status(500);
+    }
+});
+
+apiRouter.delete('/deleteRoom/:roomCode', async (req, res) => {
+    try{
+        res.json(await deleteRoom(req.params.roomCode));
     } catch(e){
         res.status(500);
     }
