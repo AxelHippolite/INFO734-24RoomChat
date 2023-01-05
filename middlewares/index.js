@@ -7,7 +7,7 @@ const isUserAuthenticated = async (req, res, next) => {
     if (req.session.userId !== undefined) {
         next();
     } else {
-        return res.status(401).send("Vous n'êtes pas authentifié");
+        return res.status(401).send("Not Authentificated");
     }
 }
 

@@ -1,12 +1,13 @@
 const express = require('express');
+const {checkUserNotAlreadyAuthenticated, isUserAuthenticated} = require("../middlewares/index.js");
 
 const viewsRouter = express.Router();
 
-viewsRouter.get('/rooms', function(req, res){
+viewsRouter.get('/rooms', isUserAuthenticated, function(req, res){
     res.render('roomsManage');
 });
 
-viewsRouter.get('/room', function(req, res){
+viewsRouter.get('/room', isUserAuthenticated, function(req, res){
     res.render('room');
 });
 
