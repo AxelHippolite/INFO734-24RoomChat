@@ -32,6 +32,10 @@ const RoomSchema = new Schema({
     code: {
         type: Schema.Types.String,
         required: true
+    },
+    createdAt: {
+        type: Schema.Types.Date,
+        default: Date.now
     }
 })
 

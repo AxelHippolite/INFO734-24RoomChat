@@ -50,11 +50,18 @@
             }
         });
     }
-    function readAllRooms(){
+    async function readAllRooms(){
         axios.get("http://localhost:3000/api/rooms").then(function(response){
             const res = response.data;
             for(let i = 0; i < response.data.length; i++){
-                document.getElementById("feed").innerHTML += `<li onclick="joinRoom('${res[i].code}', '${res[i].name}')"> <b>Name</b> : ${res[i].name} <b>Code</b> : ${res[i].code}</li>`;
+                const date = new Date();
+                const createdAt = res[i].createdAt.split(":");
+                const minute = createdAt[1] - 1, hour = parseInt(createdAt[0].slice(-2));
+                if(minute !== date.getMinutes() && hour !== date.getHours()){
+                    document.getElementById("feed").innerHTML += `<li onclick="joinRoom('${res[i].code}', '${res[i].name}')"> <b>Name</b> : ${res[i].name} <b>Code</b> : ${res[i].code}</li>`;
+                } else{
+                    axios.delete(`http://localhost:3000/api/deleteRoom/${res[i].code}`);
+                }
             }
         });
     }
