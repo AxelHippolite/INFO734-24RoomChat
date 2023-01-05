@@ -31,10 +31,12 @@
     }
 
     async function enterRoom(){
+        const url = new URLSearchParams(window.location.search);
+        const room = url.get('id');
         const username = await getSessionUsername();
         user.username = username;
         addWelcomeMessage({}, true);
-        socket.emit('userConnected', {username});
+        socket.emit('userConnected', {username, room});
     }
 
     function addMessage({user, message}){
@@ -50,13 +52,15 @@
     }
 
     function sendMessages(){
+        const url = new URLSearchParams(window.location.search);
+        const room = url.get('id');
         const field = document.getElementById("messages");
         if(!field.value){
             field.placeholder = "ERROR";
         } else{
             const message = field.value;
             addMessage({user, message});
-            socket.emit('sendMessage', {user, message});
+            socket.emit('sendMessage', {user, message, room});
             field.value = '';
         }
     }

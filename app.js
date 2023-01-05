@@ -48,11 +48,13 @@ io.on('connection', socket => {
             id: socket.id,
             username: payload.username
         };
-        socket.broadcast.emit('userConnected', users[socket.id]);
+        socket.join(payload.room);
+        socket.broadcast.to(payload.room).emit('userConnected', users[socket.id]);
     });
 
     socket.on('sendMessage', payload => {
-        socket.broadcast.emit('sendMessage', {
+        socket.join(payload.room);
+        socket.broadcast.to(payload.room).emit('sendMessage', {
             user: payload.user,
             message: payload.message,
         });
