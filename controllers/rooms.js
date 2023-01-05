@@ -1,5 +1,5 @@
 const {getKeysNotProvided} = require("../utils.js");
-const {Room} = require("../models/index.js");
+const {Message, Room} = require("../models/index.js");
 
 async function createRoom(room){
     const neededKeys = ["name", "code"];
@@ -25,6 +25,15 @@ async function readAllRooms() {
     }
 }
 
+async function readRoomsViewed(userid) {
+    try {
+        return await Message.find({userId : userid});
+    }
+    catch (e) {
+        throw new Error("An Error Has Occured");
+    }
+}
+
 async function deleteAllRooms() {
     try {
         return await Room.deleteMany({})
@@ -37,5 +46,6 @@ async function deleteAllRooms() {
 module.exports = {
     createRoom: createRoom,
     readAllRooms: readAllRooms,
+    readRoomsViewed: readRoomsViewed,
     deleteAllRooms: deleteAllRooms
 }

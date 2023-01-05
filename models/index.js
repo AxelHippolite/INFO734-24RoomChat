@@ -51,6 +51,11 @@ const MessagesSchema = new Schema({
         required: true
     },
 
+    roomName:{
+        type: Schema.Types.String,
+        required: true
+    },
+
     roomCode: {
         type: Schema.Types.String,
         required: true

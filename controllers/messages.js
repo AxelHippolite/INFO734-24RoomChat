@@ -2,7 +2,7 @@ const {getKeysNotProvided} = require("../utils.js");
 const {Message} = require("../models/index.js");
 
 async function createMessage(message){
-    const neededKeys = ["content", "userId", "username", "roomCode", "createdAt"];
+    const neededKeys = ["content", "userId", "username", "roomName", "roomCode", "createdAt"];
     const keysNotGiven = getKeysNotProvided(neededKeys, message);
     if (keysNotGiven.length !== 0) {
         throw new Error("Empty Field");
@@ -18,7 +18,16 @@ async function createMessage(message){
 
 async function readMessages(roomid) {
     try {
-        return await Message.find({roomCode: roomid})
+        return await Message.find({roomCode: roomid});
+    }
+    catch (e) {
+        throw new Error("An Error Has Occured");
+    }
+}
+
+async function deleteAllMessages() {
+    try {
+        return await Message.deleteMany({})
     }
     catch (e) {
         throw new Error("An Error Has Occured");
@@ -27,5 +36,6 @@ async function readMessages(roomid) {
 
 module.exports = {
     createMessage: createMessage,
-    readMessages: readMessages
+    readMessages: readMessages,
+    deleteAllMessages: deleteAllMessages
 }
