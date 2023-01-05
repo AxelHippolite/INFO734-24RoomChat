@@ -19,36 +19,33 @@
 <script>
     const socket = io("http://localhost:3000");
     const user = {
-        username: null,
-        userId: null,
-    }
+        username: null
+    };
 
     socket.on('userConnected', payload => addWelcomeMessage(payload, false));
     socket.on('sendMessage', payload => addMessage(payload));
 
-    function getSession(){
-        axios.get("http://localhost:3000/api/session").then(function (response) {
-            const username = response.data.username;
-            return username;
-        });
+    async function getSessionUsername(){
+        const session = await axios.get("http://localhost:3000/api/session");
+        return session.data.username;
     }
 
-    function enterRoom(){
-        const username = getSession();
-        user.name = username;
+    async function enterRoom(){
+        const username = await getSessionUsername();
+        user.username = username;
         addWelcomeMessage({}, true);
         socket.emit('userConnected', {username});
     }
 
     function addMessage({user, message}){
         const date = new Date();
-        document.getElementById("feed").innerHTML += `<li>${user.name} - ${date.getHours()}:${date.getMinutes()} : ${message}</li>`;
+        document.getElementById("feed").innerHTML += `<li>${user.username} - ${date.getHours()}:${date.getMinutes()} : ${message}</li>`;
     };
 
     function addWelcomeMessage(user, you){
         const message = you ?
             'You have joined the conversation' :
-            `${user.name} has joined the conversation`;
+            `${user.username} has joined the conversation`;
         document.getElementById("feed").innerHTML += `<li style="color: green">${message}</li>`;
     }
 

@@ -46,7 +46,7 @@ io.on('connection', socket => {
     socket.on('userConnected', payload => {
         users[socket.id] = {
             id: socket.id,
-            name: payload.name
+            username: payload.username
         };
         socket.broadcast.emit('userConnected', users[socket.id]);
     });

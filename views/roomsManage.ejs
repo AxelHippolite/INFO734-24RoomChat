@@ -40,9 +40,9 @@
     function joinRoom(code){
         window.location.href = "http://localhost:3000/room?id="+code;
     }
-    function signOut(){
-        axios.delete("http://localhost:3000/api/logout");
-        //window.location.href = "http://localhost:3000/home";
+    async function signOut(){
+        await axios.delete("http://localhost:3000/api/logout");
+        window.location.href = "http://localhost:3000/home";
     }
     function getSession(){
         axios.get("http://localhost:3000/api/session").then(function (response) {
