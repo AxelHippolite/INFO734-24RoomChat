@@ -30,6 +30,11 @@
         return session.data.username;
     }
 
+    async function getSessionUserId(){
+        const session = await axios.get("http://localhost:3000/api/session");
+        return session.data.userId;
+    }
+
     async function enterRoom(){
         const url = new URLSearchParams(window.location.search);
         const room = url.get('id');
@@ -39,8 +44,14 @@
         socket.emit('userConnected', {username, room});
     }
 
-    function addMessage({user, message}){
+    async function addMessage({user, message}){
         const date = new Date();
+        const userid = await getSessionUserId();
+        const url = new URLSearchParams(window.location.search);
+        const room = url.get('id');
+        const sd = date.getHours().toString() + ":" + date.getMinutes().toString();
+        console.log({content: message, userId: userid, username: user.username, roomCode: room, createdAt: sd});
+        axios.post("http://localhost:3000/api/message", {content: message, userId: userid, username: user.username, roomCode: room, createdAt: sd});
         document.getElementById("feed").innerHTML += `<li>${user.username} - ${date.getHours()}:${date.getMinutes()} : ${message}</li>`;
     };
 
@@ -65,7 +76,19 @@
         }
     }
 
+    function readMessages(){
+        const url = new URLSearchParams(window.location.search);
+        const room = url.get('id');
+        axios.get(`http://localhost:3000/api/messages/${room}`).then(function(response){
+            const res = response.data;
+            for(let i = 0; i < response.data.length; i++){
+                document.getElementById("feed").innerHTML += `<li>${res[i].username} - ${res[i].createdAt} : ${res[i].content}</li>`
+            }
+        });
+    }
+
     function onLoad(){
+        readMessages();
         enterRoom();
     }
 </script>

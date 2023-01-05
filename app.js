@@ -11,7 +11,6 @@ const {Server} = require("socket.io");
 
 const users = {};
 
-
 const viewRouter = require("./routes/views.js");
 const apiRouter = require("./routes/api.js");
 

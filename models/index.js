@@ -35,7 +35,35 @@ const RoomSchema = new Schema({
     }
 })
 
+const MessagesSchema = new Schema({
+    content: {
+        type: Schema.Types.String,
+        required: true
+    },
+
+    userId: {
+        type: Schema.Types.String,
+        required: true
+    },
+
+    username: {
+        type: Schema.Types.String,
+        required: true
+    },
+
+    roomCode: {
+        type: Schema.Types.String,
+        required: true
+    },
+
+    createdAt: {
+        type: Schema.Types.String,
+        required: true
+    }
+})
+
 module.exports = {
     User: mongoose.model('user', UserSchema),
-    Room: mongoose.model('room', RoomSchema)
+    Room: mongoose.model('room', RoomSchema),
+    Message: mongoose.model('message', MessagesSchema)
 }
