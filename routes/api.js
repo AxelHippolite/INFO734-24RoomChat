@@ -24,7 +24,7 @@ apiRouter.delete('/session', (req, res) => {
 
 /* ===== User Routes ===== */
 
-apiRouter.post('/login', checkUserNotAlreadyAuthenticated, async (req, res) => {
+apiRouter.post('/login', async (req, res) => {
     try{
         //const b64auth = (req.headers.authorization || '').split(' ')[1] || '';
         const result = await logInUser(req.body);
