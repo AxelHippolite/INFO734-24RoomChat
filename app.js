@@ -9,9 +9,6 @@ const redis = require("redis");
 const connectRedis = require("connect-redis");
 const {Server} = require("socket.io");
 
-const users = {};
-
-const viewRouter = require("./routes/views.js");
 const apiRouter = require("./routes/api.js");
 
 const app = express();
@@ -21,7 +18,6 @@ app.use(cors({
     credentials: true
 }));
 
-app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.json());
@@ -42,20 +38,12 @@ const io = new Server(server, {
 });
 
 io.on('connection', socket => {
-    socket.on('userConnected', payload => {
-        users[socket.id] = {
-            id: socket.id,
-            username: payload.username
-        };
-        socket.join(payload.room);
-        socket.broadcast.to(payload.room).emit('userConnected', users[socket.id]);
-    });
-
     socket.on('sendMessage', payload => {
         socket.join(payload.room);
-        socket.broadcast.to(payload.room).emit('sendMessage', {
-            user: payload.user,
-            message: payload.message,
+        io.to(payload.room).emit('sendMessage', {
+            username: payload.user,
+            content: payload.message,
+            createdAt: payload.date
         });
     });
 });
@@ -110,5 +98,4 @@ app.use(session({
 }));
 
 /* ===== Routes ===== */
-app.use('/', viewRouter);
 app.use('/api', apiRouter);
