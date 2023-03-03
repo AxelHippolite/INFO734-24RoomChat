@@ -7,7 +7,7 @@ const IndexPage = ({showErrorMessage, showInfoMessage}) => {
     <Section>
       <Heading>24Room</Heading>
       <Columns>
-        <Columns.Column className="is-half has-background-danger">
+        <Columns.Column className="is-half has-background-success">
           <Heading className="has-text-white">Discover the World. But only for 24 Hours.</Heading>
         </Columns.Column>
         <Columns.Column className="is- half tp-notification">

@@ -68,7 +68,7 @@ export const SignupForm = ({showErrorMessage, showInfoMessage}) => { // Formulai
                                 value={connectionData.password} autoComplete="current-password"/>
                 </Form.Control>
             </Form.Field><br></br>
-            <Button onClick={singUpUser} className="is-block is-danger is-fullwidth is-medium">Sign Up</Button>
+            <Button onClick={singUpUser} className="is-block is-success is-fullwidth is-medium">Sign Up</Button>
         </form>
     )
 }

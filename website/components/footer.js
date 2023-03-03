@@ -6,7 +6,7 @@ export const Footer = () => { //Footer de l'Application
             <Container>
                 <Level>
                     <Level.Item>
-                        <small className="level-item has-text-danger">
+                        <small className="level-item has-text-success">
                             24Room Hippolite Axel &copy; 2022
                         </small>
                     </Level.Item>

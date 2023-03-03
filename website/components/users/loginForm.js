@@ -63,8 +63,8 @@ export const LoginForm = ({showErrorMessage, showInfoMessage}) => { // Formulair
                                 value={connectionData.password} autoComplete="current-password"/>
                 </Form.Control>
             </Form.Field>
-            <Button onClick={logUserIn} className="is-block is-danger is-fullwidth is-medium">Sign In</Button><br></br>
-            <Button onClick={toSignUp} className="is-block is-danger is-fullwidth is-medium">Sign Up</Button>
+            <Button onClick={logUserIn} className="is-block is-success is-fullwidth is-medium">Sign In</Button><br></br>
+            <Button onClick={toSignUp} className="is-block is-success is-fullwidth is-medium">Sign Up</Button>
         </form>
     )
 }
