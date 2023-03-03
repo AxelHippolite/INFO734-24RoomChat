@@ -52,7 +52,7 @@ export const MessageForm = ({socket, showErrorMessage}) => { // Formulaire de Me
                 </Form.Control>
             </Form.Field>
 
-            <Button onClick={sendMessage} className="is-block is-danger is-fullwidth is-medium">SEND</Button>
+            <Button onClick={sendMessage} className="is-block is-success is-fullwidth is-medium">SEND</Button>
         </form>
     )
 }

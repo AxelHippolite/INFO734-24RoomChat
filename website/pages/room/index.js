@@ -61,7 +61,7 @@ const RoomPage = ({showErrorMessage, showInfoMessage}) => {
                         <MessageList messages={messages}/>
                     </Columns.Column>
                 </Columns><br></br>
-                <Button onClick={() => {router.replace('/home')}} className="is-block is-danger is-fullwidth is-medium">Return HOME</Button>
+                <Button onClick={() => {router.replace('/home')}} className="is-block is-success is-fullwidth is-medium">Return HOME</Button>
             </Columns.Column>
         </PageWrapper>
     );

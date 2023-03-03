@@ -5,7 +5,7 @@ function join(room, router){
 }
 export const RoomsList = ({rooms, router}) => {
     return (
-        <Panel className="panel-heading has-text-danger">
+        <Panel className="panel-heading has-text-success">
             {rooms.map((room) => <Content onClick={() => {join(room, router)}}>{room.name} - {room.code}</Content>)}
         </Panel>
     )

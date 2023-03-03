@@ -61,15 +61,15 @@ const HomePage = ({showErrorMessage, showInfoMessage}) => {
             <Heading>Welcome {userData.username} !</Heading>
             <Columns>
                 <Columns.Column className="is-one-third case">
-                    <Heading className="has-text-danger">Rooms</Heading>
+                    <Heading className="has-text-success">Rooms</Heading>
                     <RoomsList rooms={roomsData} router={router}/>
                 </Columns.Column>
                 <Columns.Column className="is-one-third case">
-                    <Heading className="has-text-danger">Rooms Viewed</Heading>
+                    <Heading className="has-text-success">Rooms Viewed</Heading>
                     <RoomsList rooms={viewData} router={router}/>
                 </Columns.Column>
                 <Columns.Column className="is-one-third case">
-                    <Heading className="has-text-danger">Create A Room</Heading>
+                    <Heading className="has-text-success">Create A Room</Heading>
                     <RoomsForms showErrorMessage={showErrorMessage} showInfoMessage={showInfoMessage}/>
                 </Columns.Column>
             </Columns>

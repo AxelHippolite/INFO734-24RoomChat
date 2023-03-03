@@ -15,12 +15,12 @@ export const Navbar = ({router}) => {
         <BulmaNavbar className="isFixed">
             <BulmaNavbar.Brand>
                 <BulmaNavbar.Item>
-                    <Heading className='has-text-danger'>24Room</Heading>
+                    <Heading className='has-text-success'>24Room</Heading>
                 </BulmaNavbar.Item>
             </BulmaNavbar.Brand>
             <BulmaNavbar.Menu>
                 <div className="navbar-end">
-                    <a className="navbar-item has-text-danger" href="/logout">Logout</a>
+                    <a className="navbar-item has-text-success" href="/logout">Logout</a>
                 </div>
             </BulmaNavbar.Menu>
         </BulmaNavbar>

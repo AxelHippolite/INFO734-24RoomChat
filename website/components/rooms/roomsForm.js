@@ -61,7 +61,7 @@ export const RoomsForms = ({showErrorMessage, showInfoMessage}) => { // Formulai
                 </Form.Control>
             </Form.Field>
 
-            <Button onClick={createRoom} className="is-block is-danger is-fullwidth is-medium">Create Room</Button>
+            <Button onClick={createRoom} className="is-block is-success is-fullwidth is-medium">Create Room</Button>
         </form>
     )
 }
