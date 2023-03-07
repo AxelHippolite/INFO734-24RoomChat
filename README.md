@@ -2,6 +2,12 @@
 ## Introduction
 24Room is a social network based on a room system where people can chat with each other. The originality of 24Room lies in the fact that each room is deleted 24 hours after its creation, taking with it the entire conversation. No return is possible. The goal is to put forward and share what each user lives in the present moment because *what is past does not happen anymore and what is future has not happened yet*.
 
+## Team Organization
+GitHub Projects is a powerful tool that our team uses to manage our projects efficiently. It provides a collaborative platform where we can organize, prioritize and track our tasks in real-time. Throughout our project, we utilized two boards; one for prioritizing tasks and the other for tracking their progress. The prioritization board helped us to understand the importance of each task and allocate resources accordingly. The progress board allowed us to track each task's status, assign them to the relevant team members, and ensure that everything was on track. By using GitHub Projects, we were able to streamline our workflow and increase productivity, resulting in the successful completion of our project within the given timeframe.
+
+## Application Architecture
+Our projects are designed using the Model-View-Controller (MVC) architecture, along with an Application Programming Interface (API) based on the Representational State Transfer (REST) protocol. This architecture enables us to separate the application logic into distinct components, which makes it easier to maintain and update the system. The MVC pattern divides the application into three interconnected components: the Model, which manages the data and business logic, the View, which presents the data to the user, and the Controller, which handles user input and manages the flow of data between the Model and the View. In addition, the RESTful API allows us to exchange data between the client and server in a standardized and secure manner, making our applications more scalable and flexible. By leveraging these technologies, we can build robust, scalable, and secure applications that meet our clients' needs.
+
 ## Installation
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
